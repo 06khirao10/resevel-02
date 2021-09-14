@@ -36,6 +36,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-}
 
-test
+    public function reservation()
+    {
+        return $this->hasOne('App\Reservation');
+    }
+
+}
