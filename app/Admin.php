@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Owners extends Model
+class Admin extends Model
 {
     protected $fillable = ['name','password','e-mail'];
 }
