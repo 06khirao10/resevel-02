@@ -16,12 +16,13 @@ Route::get('/', function () {
 });
 
 Route::get('login', 'User\Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'User\Auth\LoginController@showLoginForm');
+Route::post('login', 'User\Auth\LoginController@login');
 
 Route::get('register', 'User\Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'User\Auth\RegisterController@showRegistrationForm');
 
 Route::post('logout', 'User\Auth\LoginController@logout')->name('logout');
+Route::post('admin/logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
 Route::get('admin/login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.login');
 Route::post('admin/login', 'Admin\Auth\LoginController@login');
