@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\Reservation;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -17,12 +17,13 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\Reservation::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => Hash::make('password'), // password
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime
-    ];
+        'user_id' => function(){
+            return factory(App\User::class)->create()->id;
+                               },
+        'requirements' => $faker->text,
+        'start_datetime' => $faker->dateTime,
+        'end_datetime' => $faker->dateTime
+           ];
 });
