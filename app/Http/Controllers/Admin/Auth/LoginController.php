@@ -39,6 +39,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
      /**
      * @return View
      */
@@ -46,24 +47,23 @@ class LoginController extends Controller
     {
         return view('admin/auth/login');
     }
+
     public function login(Request $request)
     {
-        $data=$request->only('email','password');
+        $data = $request->only('email','password');
 
-        if(Auth::guard('admin')->attempt(['email' => $data["email"], 'password' => $data["password"]])){
-
-        return redirect('admin');
+        if(Auth::guard('admin')->attempt(['email' => $data['email'], 'password' => $data['password']]))
+        {
+            return redirect('admin');
         }
         return redirect('/admin/login');
     }
+
     public function logout(Request $request)
     {
-       Auth::logout();
-
-       $request->session()->invalidate();
-
-       $request->session()->regenerateToken();
-
-       return redirect('/admin/login');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/admin/login');
     }
 }
