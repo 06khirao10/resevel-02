@@ -46,19 +46,22 @@ class LoginController extends Controller
     {
         return view('user/auth/login');
     }
-     public function login(Request $request)
+    public function login(Request $request)
     {
         $data=$request->only('email','password');
 
         if(Auth::guard('web')->attempt(['email' => $data["email"], 'password' => $data["password"]])){
-            return redirect('/');
+
+        return redirect('/');
         }
         return redirect('/login');
     }
     public function logout(Request $request)
     {
        Auth::logout();
+
        $request->session()->invalidate();
+
        $request->session()->regenerateToken();
 
        return redirect('/login');

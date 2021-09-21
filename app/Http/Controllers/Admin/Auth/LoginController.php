@@ -51,14 +51,17 @@ class LoginController extends Controller
         $data=$request->only('email','password');
 
         if(Auth::guard('admin')->attempt(['email' => $data["email"], 'password' => $data["password"]])){
-            return redirect('admin');
+
+        return redirect('admin');
         }
         return redirect('/admin/login');
     }
     public function logout(Request $request)
     {
        Auth::logout();
+
        $request->session()->invalidate();
+
        $request->session()->regenerateToken();
 
        return redirect('/admin/login');
