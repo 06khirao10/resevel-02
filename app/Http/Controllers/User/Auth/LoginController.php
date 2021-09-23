@@ -54,9 +54,9 @@ class LoginController extends Controller
 
         if(Auth::guard('web')->attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
-            return redirect('/');
+            return redirect()->route('home');
         }
-        return redirect('/login');
+        return redirect()->route('login');
     }
 
     public function logout(Request $request)
@@ -64,6 +64,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
