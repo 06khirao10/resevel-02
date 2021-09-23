@@ -52,7 +52,7 @@ class LoginController extends Controller
     {
         $data = $request->only('email','password');
 
-        if(Auth::guard('web')->attempt(['email' => $data['email'], 'password' => $data['password']]))
+        if(Auth::guard('user')->attempt(['email' => $data['email'], 'password' => $data['password']]))
         {
             return redirect()->route('home');
         }
