@@ -20,7 +20,7 @@ Route::get('login', 'User\Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'User\Auth\LoginController@login');
 
 Route::get('register', 'User\Auth\RegisterController@showRegistrationForm')->name('register');
-Route::post('register', 'User\Auth\RegisterController@showRegistrationForm');
+Route::post('register', 'User\Auth\RegisterController@register');
 
 Route::group(['middleware' => ['auth:user']], function() {
     Route::get('/', 'UserController@home')->name('home');
