@@ -6,7 +6,7 @@
     <h2 class="title">Reservelにログイン</h2>
     <div class="text-center m-3"></div>
     <div class="text-center">
-      <p class="acountPage_link"><a href="{{ route('admin/register') }}">管理者新規登録</a></p>
+      <p class="acountPage_link"><a href="{{ route('admin.register') }}">管理者新規登録</a></p>
     </div>
     <form class="new_user" id="new_user" action="{{ route('admin.login') }}" accept-charset="UTF-8" method="post">
     {{ csrf_field() }}

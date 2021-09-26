@@ -5,7 +5,7 @@
   <div class="titleArea">
     <h1>管理者アカウントを新規作成</h1>
     <div class="m-3"></div>
-      <p class="acountPage_link"><a href="{{ route('admin/login') }}">アカウントにサインイン</a></p>
+      <p class="acountPage_link"><a href="{{ route('admin.login') }}">アカウントにサインイン</a></p>
     </div>
     <div class="container">
       <form class="mt-5, signupForm" id="new_user" action="{{ route('admin.register') }}" accept-charset="UTF-8" method="post">
