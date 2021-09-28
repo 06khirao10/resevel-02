@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\admin;
+use App\Admin;
 
 class AdminsTableSeeder extends Seeder
 {
@@ -12,6 +12,16 @@ class AdminsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Admin::class, 10)->create();
+        DB::table('admins')->insert([
+            [
+                'name' => '管理者用テストユーザー',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('adminadmin'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        factory(Admin::class, 10)->create();
     }
 }

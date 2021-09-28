@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\ReservationNotPossible;
 
 class ReservationNotPossiblesTableSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class ReservationNotPossiblesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\ReservationNotPossible::class, 10)->create();
+        factory(ReservationNotPossible::class, 10)->create();
     }
 }

@@ -19,9 +19,9 @@ use Illuminate\Support\Str;
 
 $factory->define(App\Reservation::class, function (Faker $faker){
     return [
-        'user_id' => function(){return factory(App\User::class)->create()->id;},
-        'requirements' => $faker->text,
-        'start_datetime' => $faker->dateTime,
-        'end_datetime' => $faker->dateTime
+        'user_id' => $faker->numberBetween($min = 1, $max = 10),
+        'requirements' => $faker->realText,
+        'start_datetime' => $faker->dateTimeThisMonth,
+        'end_datetime' => $faker->dateTimeThisMonth
     ];
 });

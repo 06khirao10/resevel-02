@@ -19,6 +19,6 @@ use Illuminate\Support\Str;
 
 $factory->define(App\ReservationNotPossible::class, function (Faker $faker) {
     return [
-        'date' => $faker->datetime
+        'date' => $faker->dateTimeThisMonth,
     ];
 });

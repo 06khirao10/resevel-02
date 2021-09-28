@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\user;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,6 +12,16 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-       //factory(App\User::class, 10)->create();
+        DB::table('users')->insert([
+            [
+                'name' => 'テストユーザー',
+                'email' => 'test@gmail.com',
+                'password' => Hash::make('testtest'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        factory(User::class, 10)->create();
     }
 }
