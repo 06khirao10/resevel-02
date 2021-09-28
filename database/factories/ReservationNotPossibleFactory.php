@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\ReservationNotPossible;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
@@ -17,12 +17,8 @@ use Illuminate\Support\Str;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(App\ReservationNotPossible::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => Hash::make('password'), // password
-        'created_at' => $faker->dateTime,
-        'updated_at' => $faker->dateTime
+        'date' => $faker->datetime
     ];
 });
