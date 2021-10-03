@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
     public function adminHome()
     {
-        return view('auth.admin.home');
+        $admin = \DB::table('admins')
+        ->where('id',Auth::id())
+        ->first();
+        return view('auth.admin.home',compact('admin'));
     }
 }
