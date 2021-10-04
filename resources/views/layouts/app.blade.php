@@ -16,8 +16,10 @@
 
 <body>
   <div id="app">
+    @include('layouts/header')
     <main>
-      @yield('content')
+    @include('layouts/sidebar')
+    @yield('content')
     </main>
   </div>
 </body>

@@ -4,6 +4,9 @@
 
     <a href="reservations">予約一覧</a>
 
-    <a href="{{ route('logout') }}">ログアウト</a>
+    <form action="{{ route('logout') }}" method="POST">
+    {{ csrf_field() }}
+    <button type="submit">ログアウト</button>
+    </form>
 
 </div>
