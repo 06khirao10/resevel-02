@@ -3,19 +3,23 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Reservel</title>
-  <meta name="description" content="">
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>カレンダー予約状況</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive.css">
+
 </head>
 
 <body>
   <div id="app">
     @include('layouts/header')
     <main>
-      @include('layouts/sidebar')
-      @yield('content')
+    @include('layouts/sidebar')
+    @yield('content')
     </main>
   </div>
 </body>
