@@ -9,9 +9,7 @@ class ReservationController extends Controller
 {
     public function adminHome()
     {
-        $admin = \DB::table('admins')
-        ->where('id',Auth::id())
-        ->first();
+        $admin = Auth::user();
         return view('auth.admin.home',compact('admin'));
     }
 }
