@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">パスワード変更</div>
-
                 {{-- エラーメッセージ --}}
                 @if(count($errors) > 0)
                 <div class="container mt-2">
@@ -17,7 +16,6 @@
                     </div>
                 </div>
                 @endif
-
                 {{-- 更新成功メッセージ --}}
                 @if (session('update_password_success'))
                 <div class="container mt-2">
@@ -26,11 +24,10 @@
                     </div>
                 </div>
                 @endif
-
                 {{-- フォーム --}}
                 <div class="card-body">
                     <form method="post" action="{{route('user.passwordUpdate')}}">
-                      @method('PUT')
+                        @method('PUT')
                         @csrf
                         <div class="form-group">
                             <label for="password">新しいのパスワード</label>
