@@ -3,10 +3,7 @@
 
 @section('content')
 <div>
-  <form action="{{ route('home') }}" method="GET">
-    {{ csrf_field() }}
-    <button type="submit">前月</button>
-  </form>
+  <a href="{{ route('home') }}">前月</a>
 </div>
 
 @foreach($seat_date as $key => $value)

@@ -15,9 +15,9 @@ class UserController extends Controller
     {
         //今月の日時取得
         $year = Carbon::now();
-        $year->year;
+        $year = $year->year;
         $month = Carbon::now();
-        $month->month;
+        $month = $month->month;
         $from = Carbon::create($year, $month, 1)->firstOfMonth();
         $to = Carbon::create($year, $month, 1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
@@ -49,9 +49,9 @@ class UserController extends Controller
 
         //来月の日時取得
         $year = Carbon::now();
-        $year->year;
+        $year = $year->year;
         $month = Carbon::now();
-        $month->addMonth();
+        $month = $month->addMonth();
         $from = Carbon::create($year, $month, 1)->firstOfMonth()->addMonth(1);
         $to = Carbon::create($year, $month, 1)->addMonth(1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
