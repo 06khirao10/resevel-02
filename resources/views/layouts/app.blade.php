@@ -16,9 +16,11 @@
 
 <body>
   <div id="app">
+    @auth
     @include('layouts/header')
     <main>
     @include('layouts/sidebar')
+    @endauth
     @yield('content')
     </main>
   </div>

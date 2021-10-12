@@ -3,9 +3,9 @@
 
 @section('content')
 <div>
-  <form action="{{ route('nextMonth') }}" method="GET">
+  <form action="{{ route('home') }}" method="GET">
     {{ csrf_field() }}
-    <button type="submit">次月</button>
+    <button type="submit">前月</button>
   </form>
 </div>
 
