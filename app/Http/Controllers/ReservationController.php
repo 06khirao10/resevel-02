@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Reservation;
 
 class ReservationController extends Controller
 {
@@ -15,12 +16,11 @@ class ReservationController extends Controller
 
     public function index()
     {
-        $list = \DB::table('reservations')
-        ->leftJoin('users','users.id','=','reservations.user_id')
+        $reservations = Reservation::leftJoin('users','users.id','=','reservations.user_id')
         ->where('users.id',Auth::id())
         ->select('reservations.*')
         ->orderBy('id', 'desc')->get();
-        return view('auth/user/reservations',['list'=>$list]);
+        return view('auth.user.reservations',['reservations'=>$reservations]);
     }
 
     public function destroy($id)
@@ -28,7 +28,7 @@ class ReservationController extends Controller
         \DB::table('reservations')
             ->where('id', $id)
             ->delete();
-        return redirect('auth/user/reservations');
+        return redirect('auth/user/reservations'[]);
     }
 
 }
