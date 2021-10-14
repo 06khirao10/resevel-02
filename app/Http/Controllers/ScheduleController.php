@@ -21,9 +21,9 @@ class ScheduleController extends Controller
             break;
             }
             $day = date('Y/m/d',strtotime($date));
-            $seat_date[]=$day;
+            $dates[]=$day;
         }
 
-        return view('schedules',compact('admin','seat_date'));
+        return view('schedules',compact('admin','dates'));
     }
 }
