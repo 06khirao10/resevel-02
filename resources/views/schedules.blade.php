@@ -4,7 +4,7 @@
 
 <div>
     @foreach($dates as $date)
-    <p>{{ $list }}</p>
+    <p>{{ $date }}</p>
     <a href="{{ route('admin.schedules.store') }}">予約NG日にする</a>
     <a href="{{ route('admin.schedules.store') }}">予約可能日にする</a>
     @endforeach
