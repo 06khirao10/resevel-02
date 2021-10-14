@@ -3,7 +3,7 @@
 
 @section('content')
 <div>
-  <a href="{{ route('nextMonth') }}">次月</a>
+  <a href="{{ route('home') }}">前月</a>
 </div>
 
 @foreach($seat_date as $key => $value)
