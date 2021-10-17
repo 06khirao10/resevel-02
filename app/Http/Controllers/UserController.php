@@ -14,10 +14,9 @@ class UserController extends Controller
     public function home()
     {
         //今月の日時取得
-        $year = Carbon::now();
-        $year = $year->year;
-        $month = Carbon::now();
-        $month = $month->month;
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
         $from = Carbon::create($year, $month, 1)->firstOfMonth();
         $to = Carbon::create($year, $month, 1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
@@ -48,10 +47,9 @@ class UserController extends Controller
     public function nextMonth(){
 
         //来月の日時取得
-        $year = Carbon::now();
-        $year = $year->year;
-        $month = Carbon::now();
-        $month = $month->addMonth();
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
         $from = Carbon::create($year, $month, 1)->firstOfMonth()->addMonth(1);
         $to = Carbon::create($year, $month, 1)->addMonth(1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
