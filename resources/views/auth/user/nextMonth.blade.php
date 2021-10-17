@@ -7,9 +7,10 @@
 </div>
 
 @if (session('error'))
-    <div>
-      <p style="color:red">{{ session('error') }}</p>
-    </div>
+<!-- エラー文表示 -->
+  <div>
+    <p style="color:red">{{ session('error') }}</p>
+  </div>
 @endif
 
 @foreach($seat_date as $key => $value)
@@ -17,6 +18,7 @@
     <p>{{ $key }}の残りの席数は{{ $value }}</p>
 
     @if($value !== 0)
+    <!-- 残席=0じゃないとき。つまり予約できるときは予約ボタン表示する -->
     <form action="{{ route('reservations.create') }}" method="GET">
       @csrf
       <input name="startDatetime" value="{{ $key }}" type="hidden">
