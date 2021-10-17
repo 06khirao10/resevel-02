@@ -20,7 +20,7 @@
     <form action="{{ route('reservations.create') }}" method="GET">
       @csrf
       <input name="startDatetime" value="{{ $key }}" type="hidden">
-        <button type="submit">予約</button>
+      <button type="submit">予約</button>
     </form>
     @endif
   </div>
