@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.adminApp')
 
 @section('content')
-    <div class="container">
-        <h3>管理者ホーム</h3>
-            @csrf
-        <div class="button">
-            <a href ="{{ route('admin.passwordEdit') }}">プロフィール</a>
-        </div>
-    </div>
+<div>
+    <p>TOP画面</p>
+</div>
+<ul>
+    <li><a href="">予約一覧表示</a></li>
+    <li><a href="">予約NG日設定</a></li>
+</ul>
+
 @endsection
