@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Reservation;
 use Carbon\Carbon;
 
@@ -17,8 +16,8 @@ class ReservationController extends Controller
         //日時のみ受け取る
         $startDatetime = $request->startDatetime;
         //同一ユーザーが同一日付で予約している数を取得
-        $reservations = DB::table('reservations')
-            ->where('user_id', Auth::user()->id)
+        $user = Auth::user();
+        $reservations = $user->reservations
             ->where('start_datetime', $startDatetime)
             ->count();
         //ユーザーが同日時に予約していたらエラー文表示

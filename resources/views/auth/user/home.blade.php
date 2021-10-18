@@ -7,7 +7,7 @@
 </div>
 
 @if (session('error'))
-<!-- エラー文表示 -->
+{{-- エラー文表示 --}}
   <div>
     <p style="color:red">{{ session('error') }}</p>
   </div>
@@ -18,8 +18,8 @@
     <p>{{ $key }}の残りの席数は{{ $value }}</p>
 
     @if($value !== 0)
-    <!-- 残席=0じゃないとき。つまり予約できるときは予約ボタン表示する -->
-    <form action="{{ route('reservations.create') }}" method="GET">
+    {{-- 残席=0じゃないとき。つまり予約できるときは予約ボタン表示する--}}
+    <form action="{{ route('reservations.create') }}" method="POST">
       @csrf
       <input name="startDatetime" value="{{ $key }}" type="hidden">
       <button type="submit">予約</button>
