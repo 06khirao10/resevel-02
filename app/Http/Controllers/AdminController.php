@@ -11,15 +11,14 @@ class AdminController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data,[
-            'new-password' => 'required|string|between:6,12|alpha_num|confirmed',
-            'new-password_confirmation' => 'required|same:new-password',
-        ],[
-            'new-password.required' => 'パスワードを入れてください',
-            'new-password.alpha_num' => '英数字のみ入れてください',
-            'new-password.min' => '6文字以上入力してください',
-            'new-password.max' => '12文字以下で入力してください',
-            'new-password-confirmation.required' => 'パスワードを入れてください',
-            'new-password-confirmation.same:new-password' => 'パスワードが違います',
+        'new-password' => 'required|string|between:6,12|alpha_num|confirmed',
+        'new-password_confirmation' => 'required|same:new-password',],[
+        'new-password.required' => 'パスワードを入れてください',
+        'new-password.alpha_num' => '英数字のみ入れてください',
+        'new-password.min' => '6文字以上入力してください',
+        'new-password.max' => '12文字以下で入力してください',
+        'new-password-confirmation.required' => 'パスワードを入れてください',
+        'new-password-confirmation.same:new-password' => 'パスワードが違います',
         ]);
     }
     //パスワード編集ページ
@@ -33,8 +32,8 @@ class AdminController extends Controller
         $val = $this->validator($data);
         if ($val->fails()){
             return redirect()->route('admin.passwordEdit')
-                ->withErrors($val)
-                ->withInput();
+            ->withErrors($val)
+            ->withInput();
         }
         $admin->password = bcrypt($request->get('new-password'));
         $admin->save();
