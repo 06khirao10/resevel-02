@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-
     protected function validator(array $data)
     {
         return Validator::make($data,[
@@ -21,7 +20,7 @@ class AdminController extends Controller
         'new-password-confirmation.required' => 'パスワードを入れてください',
         'new-password-confirmation.same:new-password' => 'パスワードが違います',
         ]);
-        
+    
     }
     //パスワード編集ページ
     public function passwordEdit(){
