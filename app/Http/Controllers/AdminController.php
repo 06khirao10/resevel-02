@@ -29,7 +29,7 @@ class AdminController extends Controller
         return view('auth.admin.passwordEdit');
     }
     //パスワード編集機能
-    public function passwordUpdate(Request $request){    
+    public function passwordUpdate(Request $request){
         $admin = Auth::user();
         $data = $request->all();
         $val = $this->validator($data);
