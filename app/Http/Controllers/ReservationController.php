@@ -16,19 +16,15 @@ class ReservationController extends Controller
 
     public function index()
     {
-        $reservations = Reservation::leftJoin('users','users.id','=','reservations.user_id')
-        ->where('users.id',Auth::id())
-        ->select('reservations.*')
-        ->orderBy('id', 'desc')->get();
+        $user = Auth::user();
+        $reservations = $user->reservations;
         return view('auth.user.reservations',['reservations'=>$reservations]);
     }
 
-    public function destroy($id)
+    public function destroy(Request $request,Reservation $reservation)
     {
-        \DB::table('reservations')
-            ->where('id', $id)
-            ->delete();
-        return redirect('auth/user/reservations'[]);
+        $reservation->delete();
+        return redirect('reservations');
     }
 
 }

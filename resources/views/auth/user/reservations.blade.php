@@ -10,7 +10,11 @@
   終了時間
   <span>{{ $reservation->end_datetime }}</span>
   <td><a class="btn btn-primary" href="">更新</a></td>
-  <span><a class="btn btn-danger" href="" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')">削除</a></span>
+  <form method="post" action="{{ route('reservations.destroy',$reservation) }}">
+  @csrf
+  @method('DELETE')
+    <input type="submit" value="削除" onclick="return confirm('こちらの投稿を削除してもよろしいでしょうか？')"></input>
+  </from>
 </div>
 @endforeach
 @endsection
