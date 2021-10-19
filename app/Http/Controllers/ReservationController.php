@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Reservation;
 use Carbon\Carbon;
 
+
 class ReservationController extends Controller
 {
 
@@ -54,4 +55,18 @@ class ReservationController extends Controller
         $admin = Auth::user();
         return view('auth.admin.home',compact('admin'));
     }
+
+    public function index()
+    {
+        $user = Auth::user();
+        $reservations = $user->reservations;
+        return view('auth.user.reservations',['reservations'=>$reservations]);
+    }
+
+    public function destroy(Request $request,Reservation $reservation)
+    {
+        $reservation->delete();
+        return redirect('reservations');
+    }
+
 }
