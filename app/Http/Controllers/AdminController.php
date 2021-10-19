@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+
     protected function validator(array $data)
     {
         return Validator::make($data,[
