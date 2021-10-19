@@ -20,9 +20,11 @@ class AdminController extends Controller
         'new-password-confirmation.required' => 'パスワードを入れてください',
         'new-password-confirmation.same:new-password' => 'パスワードが違います',
         ]);
+        
     }
     //パスワード編集ページ
     public function passwordEdit(){
+
         return view('auth.admin.passwordEdit');
     }
     //パスワード編集機能
