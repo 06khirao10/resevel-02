@@ -10,7 +10,7 @@
     ?>
     <p>{{ $date_str }}</p>
 
-    @if(!in_array($date,(array)$button))
+    @if(!in_array($date,array_column($button,'date')))
     <form action="{{ route('admin.schedules.store') }}" method="POST">
         @csrf
         <input type="hidden" name="add" value="{{ $date }}">

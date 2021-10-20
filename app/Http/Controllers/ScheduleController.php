@@ -22,10 +22,10 @@ class ScheduleController extends Controller
             break;
             }
             //今月の日付を配列に入れる
-            $dates[]=$date;
+            $dates[]=$date->toDateString();
         }
 
-        $button = ReservationNotPossible::all();
+        $button = ReservationNotPossible::get()->toArray();
 
         return view('schedules',compact('admin','dates','button'));
     }
