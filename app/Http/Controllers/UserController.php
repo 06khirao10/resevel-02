@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Reservation;
+use App\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -108,5 +109,10 @@ class UserController extends Controller
             'new-password_confirmation.required' => 'パスワードを入れてください',
             'new-password_confirmation.same:new-password' => 'パスワードが違います',
         ]);
+    }
+
+    public function adminindex(){
+        $users=User::all();
+        return view('auth/admin/users',['users'=>$users]);
     }
 }
