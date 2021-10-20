@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth:user']], function() {
     Route::get('password-edit', 'UserController@passwordEdit')->name('user.passwordEdit');
     Route::put('password-update', 'UserController@passwordUpdate')->name('user.passwordUpdate');
     Route::get('reservations', 'ReservationController@index')->name('user.reservations');
-    Route::get('reservations/create', 'ReservationController@create')->name('reservations.create');
+    Route::post('reservations/create', 'ReservationController@create')->name('reservations.create');
     Route::post('reservations/store', 'ReservationController@store')->name('reservations.store');
     Route::get('thanks', 'ReservationController@thanks')->name('reservations.thanks');
     Route::delete('reservations/destroy/{reservation}', 'ReservationController@destroy')->name('reservations.destroy');

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use App\Reservation;
+use App\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 
@@ -14,10 +16,9 @@ class UserController extends Controller
     public function home()
     {
         //今月の日時取得
-        $year = Carbon::now();
-        $year = $year->year;
-        $month = Carbon::now();
-        $month = $month->month;
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
         $from = Carbon::create($year, $month, 1)->firstOfMonth();
         $to = Carbon::create($year, $month, 1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
@@ -28,8 +29,7 @@ class UserController extends Controller
             $seat_date[$day->format('Y-m-d 14:00:00')] = 10;
         }
         //月の予約データを取り出す
-        $this_month = DB::table('reservations')
-            ->groupBy('start_datetime')
+        $this_month = Reservation::groupBy('start_datetime')
             ->whereYear('start_datetime', '=', $year)
             ->whereMonth('start_datetime', '=', $month)
             ->select('start_datetime', DB::raw("count(start_datetime) as count"))
@@ -48,10 +48,9 @@ class UserController extends Controller
     public function nextMonth(){
 
         //来月の日時取得
-        $year = Carbon::now();
-        $year = $year->year;
-        $month = Carbon::now();
-        $month = $month->addMonth();
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
         $from = Carbon::create($year, $month, 1)->firstOfMonth()->addMonth(1);
         $to = Carbon::create($year, $month, 1)->addMonth(1)->lastOfMonth();
         $period = CarbonPeriod::create($from, $to);
@@ -63,8 +62,7 @@ class UserController extends Controller
         }
 
         //月の予約データを取り出す
-        $this_month = DB::table('reservations')
-            ->groupBy('start_datetime')
+        $this_month = Reservation::groupBy('start_datetime')
             ->whereYear('start_datetime', '=', $year)
             ->whereMonth('start_datetime', '=', $month)
             ->select('start_datetime', DB::raw("count(start_datetime) as count"))
@@ -111,5 +109,10 @@ class UserController extends Controller
             'new-password_confirmation.required' => 'パスワードを入れてください',
             'new-password_confirmation.same:new-password' => 'パスワードが違います',
         ]);
+    }
+
+    public function adminindex(){
+        $users=User::all();
+        return view('auth/admin/users',['users'=>$users]);
     }
 }
