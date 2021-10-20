@@ -30,7 +30,7 @@ class ReservationController extends Controller
             return redirect('/')->with('error', $startDatetime.'は既に予約しています');
         }
     }
-
+    
     public function store(Request $request)
     //予約をデータベースへ登録（予約する人のid、日時、要件）
     {
