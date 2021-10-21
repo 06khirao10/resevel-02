@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::get('/admin/users', 'UserController@adminIndex')->name('admin.users.index');
     Route::get('/admin/schedules', 'ScheduleController@edit')->name('admin.schedules');
     Route::post('/admin/schedules/store', 'ScheduleController@store')->name('admin.schedules.store');
+    Route::post('/admin/schedules/destroy', 'ScheduleController@destroy')->name('admin.schedules.destroy');
     Route::get('/admin/password-edit', 'AdminController@passwordEdit')->name('admin.passwordEdit');
     Route::put('/admin/password-update', 'AdminController@passwordUpdate')->name('admin.passwordUpdate');
     Route::post('admin/logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
