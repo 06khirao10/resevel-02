@@ -1,16 +1,18 @@
 @extends('layouts.adminApp')
 
 @section('content')
-@csrf
-<div class= "container_seat">
-  @foreach((array)$seat_date as $seat_date)
-  <p>{{ $seat_date }}</p>
-  @endforeach
-</div>
+
 <div class= "container">
-  @foreach($booking as $booking)
-  <li>{{ optional($booking)->name }}<br>{{ optional($booking)->start_datetime }}</li>
-  @endforeach
+  @foreach($reservations as $reservation)
+  <div class= "contents">
+  名前
+  <span>{{ $reservation->name }}</span>
+　開始時間
+  <span>{{ $reservation->start_datetime }}</span>
+  終了時間
+  <span>{{ $reservation->end_datetime }}</span>
+  </div>
+@endforeach
 </div>
 
 @endsection

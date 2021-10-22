@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Reservation;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 
@@ -65,32 +64,20 @@ class ReservationController extends Controller
     }
 
     public function adminIndex()
-    //予約一覧画面
+    //管理者用予約一覧画面
     {
         $admin = Auth::user();
+        $user = Auth::user();
         $user_id = Auth::user()->id;
-        $booking = \DB::table('reservations')
+        $reservations = Reservation::leftjoin('users', 'reservations.user_id', '=', 'users.id')
             ->where('reservations.id', '<>', '$user_id')
-            ->leftjoin('users', 'reservations.user_id', '=', 'users.id')
-            ->select('users.name', 'reservations.start_datetime')
+            ->select('users.name', 'reservations.start_datetime', 'reservations.end_datetime')
+            ->orderByRaw('reservations.start_datetime', 'asc')
             ->get(); 
-
-        $firstOfMonth = Carbon::now()->firstOfMonth(); 
-        $endOfMonth = $firstOfMonth->copy()->endOfMonth();
-        $seat_date = [];
-
-        for ($i=0; true; $i++) {
-            $date = $firstOfMonth->copy()->addDays($i); //1日ずつ加算
-            // $date = $firstOfMonth->addDays($i); だと一日進まなくなる
-            if ($date > $endOfMonth) {
-                break;
-            }
-            $seat_date[] = $date->format('Y-m-d');
-        }
+           
         return view('auth.admin.reservations', [
             'admin' => $admin,
-            'seat_date' => $seat_date,
-            'booking' => $booking
+            'reservations' => $reservations
         ]);
     }
 
