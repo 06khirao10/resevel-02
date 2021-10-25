@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Reservation;
 use Carbon\Carbon;
 
-
 class ReservationController extends Controller
 {
 
@@ -61,6 +60,27 @@ class ReservationController extends Controller
         $user = Auth::user();
         $reservations = $user->reservations;
         return view('auth.user.reservations',['reservations'=>$reservations]);
+    }
+
+    public function adminIndex()
+    //管理者用予約一覧画面
+    {
+        $admin = Auth::user();
+        //今月分のデータ取得
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $reservations = Reservation::leftjoin('users', 'reservations.user_id', '=', 'users.id')
+            ->whereYear('reservations.start_datetime', '=', $year)
+            ->whereMonth('reservations.start_datetime', '=', $month)
+            ->select('users.name', 'reservations.start_datetime', 'reservations.end_datetime')
+            ->orderByRaw('reservations.start_datetime', 'asc')
+            ->get(); 
+
+            return view('auth.admin.reservations', [
+            'admin' => $admin,
+            'reservations' => $reservations
+        ]);
     }
 
     public function destroy(Request $request,Reservation $reservation)
