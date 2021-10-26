@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::put('/admin/reservations/update', 'ReservationController@adminUpdate')->name('admin.reservations.update');
     Route::get('/admin/users', 'UserController@adminIndex')->name('admin.users.index');
     Route::get('/admin/schedules', 'ScheduleController@edit')->name('admin.schedules');
+    Route::get('/admin/schedules/next-month', 'ScheduleController@nextMonth')->name('admin.schedules.next-month');
     Route::post('/admin/schedules/store', 'ScheduleController@store')->name('admin.schedules.store');
     Route::post('/admin/schedules/destroy', 'ScheduleController@destroy')->name('admin.schedules.destroy');
     Route::get('/admin/password-edit', 'AdminController@passwordEdit')->name('admin.passwordEdit');

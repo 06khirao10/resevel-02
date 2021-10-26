@@ -3,6 +3,7 @@
 @section('content')
 
 <div>
+    <a href="{{ route('admin.schedules') }}">前月</a>
     @foreach($dates as $date)
     <?php
         //date型を文字列に
