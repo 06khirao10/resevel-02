@@ -14,7 +14,7 @@ class ReservationController extends Controller
     public function create(Request $request)
     //予約確認ページへ
     {
-        //日時のみ受け取る
+        //開始日時のみ受け取る
         $startDatetime = $request->startDatetime;
         //同一ユーザーが同一日付で予約している数を取得
         $user = Auth::user();
@@ -22,15 +22,15 @@ class ReservationController extends Controller
             ->where('start_datetime', $startDatetime)
             ->count();
         //ユーザーが同日時に予約していたらエラー文表示
-        if($reservations == 0){
+        if($reservations){
+           //予約がすでにあるならエラー文
+            return redirect('/')->with('error', $startDatetime.'は既に予約しています');
+        } else {
             //もし予約が0なら予約確認ページへ移る
             return view('auth/user/create', ['startDatetime' => $startDatetime ]);
-        } else {
-            //予約がすでにあるならエラー文
-            return redirect('/')->with('error', $startDatetime.'は既に予約しています');
         }
     }
-    
+
     public function store(Request $request)
     //予約をデータベースへ登録（予約する人のid、日時、要件）
     {

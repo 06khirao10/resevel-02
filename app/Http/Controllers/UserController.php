@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use App\Reservation;
+use App\ReservationNotPossible;
 use App\User;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -24,17 +25,33 @@ class UserController extends Controller
         $period = CarbonPeriod::create($from, $to);
         $seat_date = [];
 
+        //連想配列で10時台と14時台を繰り返す
         foreach($period as $day){
             $seat_date[$day->format('Y-m-d 10:00:00')] = 10;
             $seat_date[$day->format('Y-m-d 14:00:00')] = 10;
         }
-        //月の予約データを取り出す
+        //月の予約データをまとめて取り出す
         $this_month = Reservation::groupBy('start_datetime')
             ->whereYear('start_datetime', '=', $year)
             ->whereMonth('start_datetime', '=', $month)
             ->select('start_datetime', DB::raw("count(start_datetime) as count"))
             ->get();
 
+        //今年、今月のNGな日のデータをすべて取り出す
+        $no_date = ReservationNotPossible::whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month)
+            ->get();
+
+        $array = [];
+        //設定したNGな日をdateとして1つずつとり、それを配列にいれる
+        $no_date->each(function ($not_reservation_date) use (&$array){
+            $not_date = new Carbon($not_reservation_date->date);
+            //配列に要素を追加する場合は[ ]を指定して $配列名[ ]='値'
+            $array[] = $not_date->format('Y-m-d 10:00:00');
+            $array[] = $not_date->format('Y-m-d 14:00:00');
+        });
+
+        //月のデータを1つずつ数えて繰り返す
         $this_month->each(function ($item) use (&$seat_date) {
             $count = $item->count;
             //例えば・・・レコード数が3だった時　席数10-レコード数3=残り席数7
@@ -42,7 +59,7 @@ class UserController extends Controller
             $date = $item->start_datetime;
             $seat_date[$date] = $remaining_seat;
         });
-        return view('auth/user/home' ,['seat_date' => $seat_date,]);
+        return view('auth/user/home' ,['seat_date' => $seat_date, 'not_date' => $array]);
     }
 
     public function nextMonth(){
@@ -68,6 +85,20 @@ class UserController extends Controller
             ->select('start_datetime', DB::raw("count(start_datetime) as count"))
             ->get();
 
+        //今年、今月のNGな日のデータをすべて取り出す
+        $no_date = ReservationNotPossible::whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month)
+            ->get();
+
+        $array = [];
+        //設定したNGな日をdateとして1つずつとり、それを配列にいれる
+        $no_date->each(function ($not_reservation_date) use (&$array){
+            $not_date = new Carbon($not_reservation_date->date);
+            //配列に要素を追加する場合は[ ]を指定して $配列名[ ]='値'
+            $array[] = $not_date->format('Y-m-d 10:00:00');
+            $array[] = $not_date->format('Y-m-d 14:00:00');
+        });
+
         $this_month->each(function ($item) use (&$seat_date) {
             $count = $item->count;
             //例えば・・・レコード数が3だった時　席数10-レコード数3=残り席数7
@@ -75,7 +106,7 @@ class UserController extends Controller
             $date = $item->start_datetime;
             $seat_date[$date] = $remaining_seat;
         });
-        return view('auth/user/nextMonth' ,['seat_date' => $seat_date ]);
+        return view('auth/user/nextMonth' ,['seat_date' => $seat_date, 'not_date' => $array ]);
     }
 
     public function passwordEdit(){
