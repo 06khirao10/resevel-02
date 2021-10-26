@@ -6,6 +6,7 @@
 @foreach ($users as $user)
 <div class="list">
   <span>{{ $user->name }}</span>
-</div>
+  <a href="{{ route('admin.notice') }}"><span>{{ $user->email }}</span></a>
 @endforeach
+</div>
 @endsection
