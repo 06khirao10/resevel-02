@@ -143,7 +143,29 @@ class UserController extends Controller
     }
 
     public function adminindex(){
-        $users=User::all();
-        return view('auth/admin/users',['users'=>$users]);
+        $users = User::all();
+        return view('auth/admin/users',['users' => $users]);
+    }
+    
+    //お知らせ機能
+    public function adminNotice()
+    {
+        $admin = Auth::user();
+        //日時選択
+        $firstOfMonth = Carbon::now()->firstOfMonth();
+        $endOfMonth = $firstOfMonth->copy()->endOfMonth();
+        $period = CarbonPeriod::create($firstOfMonth, $endOfMonth);
+        //今月分を配列で取得
+        foreach($period as $key => $date){
+          $dates[] = $date->format('Y-m-d');    
+        }
+        return view('auth/admin/notice', ['admin' => $admin, 'dates' => $dates]);
+    }
+
+    //送信完了画面
+    public function adminConfirm()
+    {
+        $admin = Auth::user();
+        return view('auth/admin/confirm', ['admin' => $admin]);
     }
 }

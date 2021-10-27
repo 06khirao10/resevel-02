@@ -49,6 +49,11 @@ Route::group(['middleware' => ['auth:admin']], function() {
     Route::get('/admin/reservations/edit', 'ReservationController@adminEdit')->name('admin.reservations.edit');
     Route::put('/admin/reservations/update', 'ReservationController@adminUpdate')->name('admin.reservations.update');
     Route::get('/admin/users', 'UserController@adminIndex')->name('admin.users.index');
+    //最初はアップロードするデータ選択/入力をしていないので、受け取るデータがないためget
+    Route::get('/admin/notice', 'UserController@adminNotice')->name('admin.notice');
+    //アップロードされたデータを表示したいので、前のページからデータを受け取るためにpost
+    Route::post('/admin/notice', 'UserController@adminNotice')->name('admin.notice');
+    Route::post('/admin/confirm', 'UserController@adminConfirm')->name('admin.confirm');
     Route::get('/admin/schedules', 'ScheduleController@edit')->name('admin.schedules');
     Route::get('/admin/schedules/next-month', 'ScheduleController@nextMonth')->name('admin.schedules.next-month');
     Route::post('/admin/schedules/store', 'ScheduleController@store')->name('admin.schedules.store');
