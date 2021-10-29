@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth:user']], function() {
     Route::get('thanks', 'ReservationController@thanks')->name('reservations.thanks');
     Route::delete('reservations/destroy/{reservation}', 'ReservationController@destroy')->name('reservations.destroy');
     Route::get('reservations', 'ReservationController@index')->name('user.reservations');
+    Route::get('reservations/updateHome/{reservation}', 'ReservationController@updateHome')->name('updateHome');
+    Route::post('reservations/update/{reservation}', 'ReservationController@update')->name('reservations.update');
     Route::post('logout', 'User\Auth\LoginController@logout')->name('logout');
 });
 

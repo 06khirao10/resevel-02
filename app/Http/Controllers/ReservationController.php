@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Reservation;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\DB;
+
 
 class ReservationController extends Controller
 {
@@ -75,7 +78,7 @@ class ReservationController extends Controller
             ->whereMonth('reservations.start_datetime', '=', $month)
             ->select('users.name', 'reservations.start_datetime', 'reservations.end_datetime')
             ->orderByRaw('reservations.start_datetime', 'asc')
-            ->get(); 
+            ->get();
 
             return view('auth.admin.reservations', [
             'admin' => $admin,
@@ -89,4 +92,54 @@ class ReservationController extends Controller
         return redirect('reservations');
     }
 
+        public function updateHome($id)
+    {
+        //今月の日時取得
+        $now = Carbon::now();
+        $year = $now->year;
+        $month = $now->month;
+        $from = Carbon::create($year, $month, 1)->firstOfMonth();
+        $to = Carbon::create($year, $month, 1)->lastOfMonth();
+        $period = CarbonPeriod::create($from, $to);
+        $seat_date = [];
+
+        foreach($period as $day){
+            $seat_date[$day->format('Y-m-d 10:00:00')] = 10;
+            $seat_date[$day->format('Y-m-d 14:00:00')] = 10;
+        }
+        //月の予約データを取り出す
+        $this_month = Reservation::groupBy('start_datetime')
+            ->whereYear('start_datetime', '=', $year)
+            ->whereMonth('start_datetime', '=', $month)
+            ->select('start_datetime', DB::raw("count(start_datetime) as count"))
+            ->get();
+
+        $this_month->each(function ($item) use (&$seat_date) {
+            $count = $item->count;
+            //例えば・・・レコード数が3だった時　席数10-レコード数3=残り席数7
+            $remaining_seat = 10-$count;
+            $date = $item->start_datetime;
+            $seat_date[$date] = $remaining_seat;
+        });
+        return view('auth/user/updateHome' ,['seat_date' => $seat_date,'id' => $id,]);
+    }
+
+    public function update(Request $request, Reservation $reservation)
+    {
+
+        $reservation->start_datetime = $request->startDatetime;
+        $endDatetime = Carbon::create($request->startDatetime)->addHour(3);
+        $reservation->end_datetime = $endDatetime;
+        $user = Auth::user();
+        $reservations = $user->reservations
+            ->where('start_datetime', $request->startDatetime)
+            ->count();
+        //ユーザーが同日時に予約していたらエラー文表示
+        if($reservations){
+            //予約がすでにあるならエラー文
+             return redirect('reservations')->with('error', $request->startDatetime.'は既に予約しています');
+        }
+        $reservation->save();
+        return redirect('reservations');
+    }
 }
